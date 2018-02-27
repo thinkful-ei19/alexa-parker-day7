@@ -81,7 +81,7 @@ const fetchVideos = function (searchTerm, callback) {
 
 //testing fetchVideos
 //fetchVideos('batman', data => console.log(JSON.stringify(data)));
-//fetchVideos('batman', data => console.log(data));
+fetchVideos('batman', data => decorateResponse(data));
 
 // TASK:
 // 1. Create a `decorateResponse` function that receives the Youtube API response
@@ -94,12 +94,13 @@ const fetchVideos = function (searchTerm, callback) {
 const decorateResponse = function (response) {
   const results = response.items.map((item) => {
     return {
-      id: item.id,
+      id: item.id.videoId,
       title: item.snippet.title,
-      thumbnails: item.snippet.thumbnails.default
+      thumbnails: item.snippet.thumbnails.default.url
     };
   });
-  return results;
+  addVideosToStore(results);
+  //return results;
 };
 
 //test decorateResponse
@@ -111,17 +112,27 @@ const decorateResponse = function (response) {
 // TEST IT!
 const generateVideoItemHtml = function (video) {
   return `
-<li><a href="https://www.youtube.com/watch?${video[0].id.videoId}"><img src="${video[0].thumbnails.url}"/></a></li>`
+<li><a href="https://www.youtube.com/watch?${video.id}" target= "blank"><img src="${video.thumbnails}"/></a></li>`
 };
 
-console.log(generateVideoItemHtml(decorateResponse(sample)));
+//tested generateVideoItemHtml
+//console.log(generateVideoItemHtml(decorateResponse(sample)));
+
 // TASK:
 // 1. Create a `addVideosToStore` function that receives an array of decorated video 
 // objects and sets the array as the value held in store.items
 // TEST IT!
 const addVideosToStore = function (videos) {
-  // a) store.videos.push(videos)
+  store.videos = videos;
+  console.log(store.videos);
+  render();
+  //console.log(store);
+  //console.log(resultVar);
 };
+
+
+
+
 
 // TASK:
 // 1. Create a `render` function
@@ -129,7 +140,8 @@ const addVideosToStore = function (videos) {
 // 3. Add your array of DOM elements to the appropriate DOM element
 // TEST IT!
 const render = function () {
-
+const resultsVariable = store.videos.map( (item) => generateVideoItemHtml(item));
+$('.results').html(resultsVariable);
 };
 
 // TASK:
