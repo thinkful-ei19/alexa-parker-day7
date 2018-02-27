@@ -1,33 +1,45 @@
 'use strict';
 
-const sample = {'kind':'youtube#searchListResponse',
-'etag':'"_gJQceDMxJ8gP-8T2HLXUoURK8c/-OemHlwNRLUqOUlNJbpxgUiBFRY"',
-'nextPageToken':'CAUQAA',
-'regionCode':'US',
-'pageInfo':{'totalResults':1000000,'resultsPerPage':5},
+const sample = {
+  'kind': 'youtube#searchListResponse',
+  'etag': '"_gJQceDMxJ8gP-8T2HLXUoURK8c/-OemHlwNRLUqOUlNJbpxgUiBFRY"',
+  'nextPageToken': 'CAUQAA',
+  'regionCode': 'US',
+  'pageInfo': { 'totalResults': 1000000, 'resultsPerPage': 5 },
 
-'items':[
-  {'kind':'youtube#searchResult',
-'etag':'"_gJQceDMxJ8gP-8T2HLXUoURK8c/D3mMdZJZYLaodYDNUJsnnzUF37E"',
-'id':{'kind':'youtube#video',
-'videoId':'gjNukU-3jPk'},
-'snippet':{'publishedAt':'2018-01-13T23:01:58.000Z',
-'channelId':'UCGBtk3J7PL40ZMhf3_1YBwg',
-'title':'Evolution of Batman in Cartoons in 45 Minutes (2018)',
-'description':'A look at how animated Batman has changed since 1968. Thanks for watching! Make sure to write your suggestions in the comments below. List of cartoons and voice actors: 1. Batman with Robin...',
-'thumbnails':{
-  'default':{
-    'url':'https://i.ytimg.com/vi/gjNukU-3jPk/default.jpg',
-    'width':120,'height':90},
-    'medium':{
-      'url':'https://i.ytimg.com/vi/gjNukU-3jPk/mqdefault.jpg',
-    'width':320,'height':180},
-    'high':{
-      'url':'https://i.ytimg.com/vi/gjNukU-3jPk/hqdefault.jpg',
-    'width':480,'height':360}},
-    'channelTitle':'Then & Now',
-    'liveBroadcastContent':'none'}},
-    ]};
+  'items': [
+    {
+      'kind': 'youtube#searchResult',
+      'etag': '"_gJQceDMxJ8gP-8T2HLXUoURK8c/D3mMdZJZYLaodYDNUJsnnzUF37E"',
+      'id': {
+        'kind': 'youtube#video',
+        'videoId': 'gjNukU-3jPk'
+      },
+      'snippet': {
+        'publishedAt': '2018-01-13T23:01:58.000Z',
+        'channelId': 'UCGBtk3J7PL40ZMhf3_1YBwg',
+        'title': 'Evolution of Batman in Cartoons in 45 Minutes (2018)',
+        'description': 'A look at how animated Batman has changed since 1968. Thanks for watching! Make sure to write your suggestions in the comments below. List of cartoons and voice actors: 1. Batman with Robin...',
+        'thumbnails': {
+          'default': {
+            'url': 'https://i.ytimg.com/vi/gjNukU-3jPk/default.jpg',
+            'width': 120, 'height': 90
+          },
+          'medium': {
+            'url': 'https://i.ytimg.com/vi/gjNukU-3jPk/mqdefault.jpg',
+            'width': 320, 'height': 180
+          },
+          'high': {
+            'url': 'https://i.ytimg.com/vi/gjNukU-3jPk/hqdefault.jpg',
+            'width': 480, 'height': 360
+          }
+        },
+        'channelTitle': 'Then & Now',
+        'liveBroadcastContent': 'none'
+      }
+    },
+  ]
+};
 
 const API_KEY = 'AIzaSyD-iH7PkPVU1yYQ7SAbIiLdTs0Qt2cprlM';
 
@@ -56,7 +68,7 @@ const BASE_URL = 'https://www.googleapis.com/youtube/v3/search';
 // 2. Use `searchTerm` to construct the right query object based on the Youtube API docs
 // 3. Make a getJSON call using the query object and sending the provided callback in as the last argument
 // TEST IT! Execute this function and console log the results inside the callback.
-const fetchVideos = function(searchTerm, callback) {
+const fetchVideos = function (searchTerm, callback) {
   const query = {
     part: 'snippet',
     key: API_KEY,
@@ -79,8 +91,8 @@ const fetchVideos = function(searchTerm, callback) {
 // WILL have to dig into several nested properties!
 // TEST IT! Grab an example API response and send it into the function - make sure
 // you get back the object you want.
-const decorateResponse = function(response) {
-  const results = response.items.map( (item) => {
+const decorateResponse = function (response) {
+  const results = response.items.map((item) => {
     return {
       id: item.id,
       title: item.snippet.title,
@@ -97,9 +109,9 @@ const decorateResponse = function(response) {
 // 1. Create a `generateVideoItemHtml` function that receives the decorated object
 // 2. Using the object, return an HTML string containing all the expected data
 // TEST IT!
-const generateVideoItemHtml = function(video) {
-return `
-<li><a href="https://www.youtube.com/watch?${video.id}"><img src="${video.thumbnails}"/></a></li>`
+const generateVideoItemHtml = function (video) {
+  return `
+<li><a href="https://www.youtube.com/watch?${video[0].id.videoId}"><img src="${video[0].thumbnails.url}"/></a></li>`
 };
 
 console.log(generateVideoItemHtml(decorateResponse(sample)));
@@ -107,8 +119,8 @@ console.log(generateVideoItemHtml(decorateResponse(sample)));
 // 1. Create a `addVideosToStore` function that receives an array of decorated video 
 // objects and sets the array as the value held in store.items
 // TEST IT!
-const addVideosToStore = function(videos) {
-// a) store.videos.push(videos)
+const addVideosToStore = function (videos) {
+  // a) store.videos.push(videos)
 };
 
 // TASK:
@@ -116,7 +128,7 @@ const addVideosToStore = function(videos) {
 // 2. Map through `store.videos`, sending each `video` through your `generateVideoItemHtml`
 // 3. Add your array of DOM elements to the appropriate DOM element
 // TEST IT!
-const render = function() {
+const render = function () {
 
 };
 
@@ -131,19 +143,19 @@ const render = function() {
 //   f) Inside the callback, add the decorated response into your store using the `addVideosToStore` function
 //   g) Inside the callback, run the `render` function 
 // TEST IT!
-const handleFormSubmit = function() {
-  $('#submit-button').submit(function(event) {
-   event.preventDefault();
-   const newSearchItem = $('#search-term').val();
-   $('#search-term').val('');
+// const handleFormSubmit = function() {
+  // $('#submit-button').submit(function(event) {
+  //  event.preventDefault();
+  //  const newSearchItems = $('#search-term').val();
+  //  $('#search-term').val('');
   //test before adding to store
   //add videos to store
   //re-render
-  })
+  // })
 
-};
+// };
 
-// When DOM is ready:
-$(function () {
-handleFormSubmit();
-});
+// // When DOM is ready:
+// $(function () {
+//   handleFormSubmit();
+// });
