@@ -36,7 +36,7 @@ fetchVideos('surfing', function(data) {
 // TEST IT! Grab an example API response and send it into the function - make sure
 // you get back the object you want.
 const decorateResponse = function(response) {
-
+  const results = 
 };
 
 // TASK:
