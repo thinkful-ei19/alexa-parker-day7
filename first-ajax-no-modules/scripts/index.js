@@ -81,7 +81,7 @@ const fetchVideos = function (searchTerm, callback) {
 
 //testing fetchVideos
 //fetchVideos('batman', data => console.log(JSON.stringify(data)));
-fetchVideos('batman', data => decorateResponse(data));
+// fetchVideos('batman', data => decorateResponse(data));
 
 // TASK:
 // 1. Create a `decorateResponse` function that receives the Youtube API response
@@ -99,8 +99,8 @@ const decorateResponse = function (response) {
       thumbnails: item.snippet.thumbnails.default.url
     };
   });
-  addVideosToStore(results);
-  //return results;
+  // addVideosToStore(results);
+  return results;
 };
 
 //test decorateResponse
@@ -155,19 +155,27 @@ $('.results').html(resultsVariable);
 //   f) Inside the callback, add the decorated response into your store using the `addVideosToStore` function
 //   g) Inside the callback, run the `render` function 
 // TEST IT!
-// const handleFormSubmit = function() {
-  // $('#submit-button').submit(function(event) {
-  //  event.preventDefault();
-  //  const newSearchItems = $('#search-term').val();
-  //  $('#search-term').val('');
-  //test before adding to store
-  //add videos to store
-  //re-render
-  // })
+const handleFormSubmit = function() {
+  $('#submit-button').on('click', function(event) {
+   event.preventDefault();
+   const newSearchItems = $('#search-term').val();
+   $('#search-term').val('');
+   console.log(newSearchItems);
+   fetchVideos(newSearchItems, function(response){
+   let videos = decorateResponse(response);
+   console.log(videos);
+   addVideosToStore(videos);
+   render();
+   });
 
-// };
+  // test before adding to store
+  // add videos to store
+  // re-render
+  });
 
-// // When DOM is ready:
-// $(function () {
-//   handleFormSubmit();
-// });
+};
+
+// When DOM is ready:
+$(function () {
+  handleFormSubmit();
+});
