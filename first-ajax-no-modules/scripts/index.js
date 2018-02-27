@@ -112,7 +112,7 @@ const decorateResponse = function (response) {
 // TEST IT!
 const generateVideoItemHtml = function (video) {
   return `
-<li><a href="https://www.youtube.com/watch?${video.id}" target= "blank"><img src="${video.thumbnails}"/></a></li>`
+<li><a href="https://www.youtube.com/watch?v=${video.id}" target= "blank"><img src="${video.thumbnails}"/></a></li>`
 };
 
 //tested generateVideoItemHtml
